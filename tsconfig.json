@@ -23,7 +23,8 @@
       "dom"
     ],
     "paths": {
-      "@core/env": ["src/environments/environment"]
+      "@core/env": ["src/environments/environment"],
+      "@core/services": ["src/app/core/services/index"],
     }
   },
   "angularCompilerOptions": {
