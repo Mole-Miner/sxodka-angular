@@ -4,7 +4,7 @@ export const environment = {
     auth: {
       prefix: 'auth',
       target: {
-        login: 'login',
+        signin: 'signin',
         signup: 'signup',
         logout: 'logout',
         refresh: 'refresh',
