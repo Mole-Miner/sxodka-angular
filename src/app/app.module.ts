@@ -1,11 +1,13 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AuthenticationService } from '@core/services';
 import { AuthenticationGuard } from '@core/guards';
+
 
 @NgModule({
   declarations: [
@@ -14,7 +16,8 @@ import { AuthenticationGuard } from '@core/guards';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    BrowserAnimationsModule
   ],
   providers: [
     AuthenticationService,
