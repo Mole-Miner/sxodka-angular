@@ -3,26 +3,35 @@
         <h1 class="form__title">Sxodka</h1>
 
         <mat-form-field appearance="fill">
-            <mat-label>Name</mat-label>
-            <input matInput formControlName="name" autocomplete="off">
-            <mat-error *ngIf="nameFormControl.hasError('required')">Name required</mat-error>
+            <mat-label>{{'form.name' | translate | titlecase}}</mat-label>
+            <input matInput
+                formControlName="name"
+                autocomplete="off" 
+                [placeholder]="'form.name-placeholder' | translate">
+            <mat-error *ngIf="nameFormControl.hasError('required')">{{'form.name-required' | translate | titlecase}}</mat-error>
         </mat-form-field>
 
         <mat-form-field appearance="fill">
-            <mat-label>Lastname</mat-label>
-            <input matInput formControlName="lastname" autocomplete="off">
-            <mat-error *ngIf="lastnameFormControl.hasError('required')">Lastname required</mat-error>
+            <mat-label>{{'form.lastname' | translate | titlecase}}</mat-label>
+            <input matInput
+                formControlName="lastname"
+                autocomplete="off"
+                [placeholder]="'form.lastname-placeholder' | translate">
+            <mat-error *ngIf="lastnameFormControl.hasError('required')">{{'form.lastname-required' | translate | titlecase}}</mat-error>
         </mat-form-field>
 
         <mat-form-field appearance="fill">
-            <mat-label>Email</mat-label>
-            <input matInput formControlName="email" placeholder="example@gmail.com" autocomplete="off">
-            <mat-error *ngIf="emailFormControl.hasError('required')">Email required</mat-error>
-            <mat-error *ngIf="emailFormControl.hasError('email')">Email invalid</mat-error>
+            <mat-label>{{'form.email' | translate}}</mat-label>
+            <input matInput
+                formControlName="email"
+                autocomplete="off"
+                [placeholder]="'form.email-placeholder' | translate">
+            <mat-error *ngIf="emailFormControl.hasError('required')">{{'form.email-required' | translate}}</mat-error>
+            <mat-error *ngIf="emailFormControl.hasError('email')">{{'form.email-invalid' | translate}}</mat-error>
         </mat-form-field>
 
         <mat-form-field appearance="fill">
-            <mat-label>Password</mat-label>
+            <mat-label>{{'form.password' | translate | titlecase}}</mat-label>
             <input matInput
                 [type]="hidePassword ? 'password' : 'text'"
                 formControlName="password"
@@ -34,12 +43,12 @@
                 [attr.aria-pressed]="hidePassword">
                 <mat-icon>{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
             </button>
-            <mat-error *ngIf="passwordFormControl.hasError('required')">Password required</mat-error>
-            <mat-error *ngIf="passwordFormControl.hasError('minlength')">Password too short</mat-error>
+            <mat-error *ngIf="passwordFormControl.hasError('required')">{{'form.password-required' | translate}}</mat-error>
+            <mat-error *ngIf="passwordFormControl.hasError('minlength')">{{'form.password-minlength' | translate}}</mat-error>
         </mat-form-field>
 
         <mat-form-field appearance="fill">
-            <mat-label>Confirm password</mat-label>
+            <mat-label>{{'form.password-confirmation' | translate}}</mat-label>
             <input matInput
                 [type]="hidePassword ? 'password' : 'text'"
                 formControlName="passwordConfirmation"
@@ -51,14 +60,14 @@
                 [attr.aria-pressed]="hidePassword">
                 <mat-icon>{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
             </button>
-            <mat-error *ngIf="passwordConfirmationFormControl.hasError('required') && !passwordConfirmationFormControl.hasError('doNotEqual')">Confirm password required</mat-error>
-            <mat-error *ngIf="passwordConfirmationFormControl.hasError('doNotEqual')">Passwords do not equal</mat-error>
+            <mat-error *ngIf="passwordConfirmationFormControl.hasError('required')">{{'form.password-confirmation-required' | translate}}</mat-error>
+            <mat-error *ngIf="passwordConfirmationFormControl.hasError('doNotEqual')">{{'form.password-confirmation-invalid' | translate}}</mat-error>
         </mat-form-field>
 
         <button mat-button
             mat-raised-button
             color="primary"
-            cdkFocusInitial>Signup</button>
-        <p class="form__link" (click)="navigateToSignin()">Already have an account?</p>
+            cdkFocusInitial>{{'form.signup' | translate | titlecase}}</button>
+        <p class="form__link" (click)="navigateToSignin()">{{'form.signin-reference' | translate}}</p>
     </form>
 </div>

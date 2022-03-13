@@ -1,19 +1,19 @@
 <div class="form-container">
-    <form class="form" [formGroup]="form" (ngSubmit)="submitForm()">
+    <form class="form" [formGroup]="form">
         <h1 class="form__title">Sxodka</h1>
 
         <mat-form-field appearance="fill">
-            <mat-label>Email</mat-label>
+            <mat-label>{{'form.email' | translate}}</mat-label>
             <input matInput
                 formControlName="email"
-                placeholder="example@mail.com"
+                [placeholder]="'form.email-placeholder' | translate"
                 autocomplete="off">
-            <mat-error *ngIf="emailFormControl.hasError('required')">Email required</mat-error>
-            <mat-error *ngIf="emailFormControl.hasError('email')">Email invalid</mat-error>
+            <mat-error *ngIf="emailFormControl.hasError('required')">{{'form.email-required' | translate}}</mat-error>
+            <mat-error *ngIf="emailFormControl.hasError('email')">{{'form.email-invalid' | translate}}</mat-error>
         </mat-form-field>
 
         <mat-form-field appearance="fill">
-            <mat-label>Password</mat-label>
+            <mat-label>{{'form.password' | translate | titlecase}}</mat-label>
             <input matInput
                 formControlName="password"
                 [type]="hidePassword ? 'password' : 'text'"
@@ -24,15 +24,15 @@
                 [attr.aria-pressed]="hidePassword">
                 <mat-icon>{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
             </button>
-            <mat-error *ngIf="passwordFormControl.hasError('required')">Password required</mat-error>
-            <mat-error *ngIf="passwordFormControl.hasError('minlength')">Password to short</mat-error>
+            <mat-error *ngIf="passwordFormControl.hasError('required')">{{'form.password-required' | translate}}</mat-error>
+            <mat-error *ngIf="passwordFormControl.hasError('minlength')">{{'form.password-minlength' | translate}}</mat-error>
         </mat-form-field>
 
-        <button type="submit" 
-            mat-button
+        <button mat-button
             mat-raised-button 
             color="primary"
-            cdkFocusInitial>Signin</button>
-        <p class="form__link" (click)="navigateToSignup()">Don't have an account?</p>
+            cdkFocusInitial
+            (click)="submitForm()">{{'form.signin' | translate | titlecase}}</button>
+        <p class="form__link" (click)="navigateToSignup()">{{'form.signup-reference' | translate}}</p>
     </form>
 </div>

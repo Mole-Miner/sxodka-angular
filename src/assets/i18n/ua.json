@@ -1,0 +1,24 @@
+{
+    "form": {
+        "name": "ім'я",
+        "name-placeholder": "тарас",
+        "name-required": "Ім'я обов'язкове",
+        "lastname": "прізвище",
+        "lastname-placeholder": "шевченко",
+        "lastname-required": "Прізвище обов'язкове",
+        "email": "Електронна адреса",
+        "email-placeholder": "tarasshevchenko@mail.com",
+        "email-required": "Електронна адреса обов'язкова",
+        "email-invalid": "Введіть правильну електронну адресу",
+        "password": "пароль",
+        "password-required": "Пароль обов'язковий",
+        "password-minlength": "Пароль повинен містити більше 8 символів",
+        "password-confirmation": "Підтвердіть пароль",
+        "password-confirmation-required": "Підтвердження паролю обов'язкове",
+        "password-confirmation-invalid": "Паролі відрізняються",
+        "signin": "вхід",
+        "signin-reference": "Вже маєте акаунт?",
+        "signup": "зареєструватися",
+        "signup-reference": "Не маєте акаунт?"
+    }
+}
