@@ -5,6 +5,7 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AuthenticationService } from '@core/services';
+import { AuthenticationGuard } from '@core/guards';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { AuthenticationService } from '@core/services';
     HttpClientModule
   ],
   providers: [
-    AuthenticationService
+    AuthenticationService,
+    AuthenticationGuard
   ],
   bootstrap: [AppComponent]
 })
