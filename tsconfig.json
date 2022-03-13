@@ -26,6 +26,7 @@
       "@core/env": ["src/environments/environment"],
       "@core/services": ["src/app/core/services/index"],
       "@core/guards": ["src/app/core/guards/index"],
+      "@core/forms": ["src/app/core/forms/index"],
       "@core/interceptors": ["src/app/core/interceptors/index"],
     }
   },
