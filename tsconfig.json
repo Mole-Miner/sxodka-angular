@@ -25,6 +25,7 @@
     "paths": {
       "@core/env": ["src/environments/environment"],
       "@core/services": ["src/app/core/services/index"],
+      "@core/guards": ["src/app/core/guards/index"],
     }
   },
   "angularCompilerOptions": {
