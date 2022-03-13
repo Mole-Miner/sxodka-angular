@@ -3,9 +3,26 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
+  api: {
+    server: 'http://127.0.0.1:3000',
+    auth: {
+      prefix: 'auth',
+      target: {
+        login: 'login',
+        signup: 'signup',
+        logout: 'logout',
+        refresh: 'refresh',
+      }
+    },
+    map: {
+      prefix: 'map',
+      target: {
+        reverse: 'reverse'
+      }
+    }
+  },
   production: false
 };
-
 /*
  * For easier debugging in development mode, you can import the following file
  * to ignore zone related error stack frames such as `zone.run`, `zoneDelegate.invokeTask`.
