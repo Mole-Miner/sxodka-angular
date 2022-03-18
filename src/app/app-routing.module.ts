@@ -5,7 +5,7 @@ import { AuthenticationGuard } from '@core/guards';
 import { SigninComponent } from './signin/signin.component';
 import { SignupComponent } from './signup/signup.component';
 
-const routes: Routes = [
+export const routes: Routes = [
   {
     path: 'signin',
     component: SigninComponent
