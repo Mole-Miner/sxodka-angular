@@ -43,15 +43,15 @@ export class AuthenticationInterceptor implements HttpInterceptor {
       return this._authenticationService.refresh().pipe(
         switchMap(response => {
           this.isRefreshing = false;
-          this.refreshSubject.next(response.accessToken);
-          return next.handle(this.setAuthorizationHeader(request, response.accessToken))
+          this.refreshSubject.next(response.access);
+          return next.handle(this.setAuthorizationHeader(request, response.access))
         })
       )
     }
     return this.refreshSubject.pipe(
       filter(token => token !== null),
       take(1),
-      switchMap(accessToken => (next.handle(this.setAuthorizationHeader(request, accessToken))))
+      switchMap(access => (next.handle(this.setAuthorizationHeader(request, access))))
     );
   }
 }
