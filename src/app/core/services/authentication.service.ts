@@ -51,12 +51,12 @@ export class AuthenticationService {
     return localStorage.getItem(this.REFRESH_TOKEN) ?? '';
   }
 
-  private storeTokens(tokens: any) {
-    localStorage.setItem(this.ACCESS_TOKEN, tokens.accessToken);
-    localStorage.setItem(this.REFRESH_TOKEN, tokens.refreshToken);
+  private storeTokens(tokens: any): void {
+    localStorage.setItem(this.ACCESS_TOKEN, tokens.access);
+    localStorage.setItem(this.REFRESH_TOKEN, tokens.refresh);
   }
 
-  private removeTokens() {
+  private removeTokens(): void {
     localStorage.removeItem(this.ACCESS_TOKEN);
     localStorage.removeItem(this.REFRESH_TOKEN);
   }
