@@ -1,9 +1,10 @@
 import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { passwordEqualityValidator } from '@core/forms';
-import { AuthenticationService } from '@core/services';
 import { Subject, takeUntil } from 'rxjs';
+
+import { passwordEqualityValidator } from '@shared/forms';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-signup',
@@ -12,15 +13,15 @@ import { Subject, takeUntil } from 'rxjs';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SignupComponent implements OnInit, OnDestroy {
-  private readonly _unsubscribe: Subject<void> = new Subject<void>();
+  private readonly unsubscribe$: Subject<void> = new Subject<void>();
 
   form!: FormGroup;
 
   hidePassword = true;
 
   constructor(
-    private readonly _router: Router,
-    private readonly _authenticationService: AuthenticationService
+    private readonly router: Router,
+    private readonly authService: AuthService
   ) {}
 
   get nameFormControl(): AbstractControl {
@@ -55,7 +56,7 @@ export class SignupComponent implements OnInit, OnDestroy {
 
   submitForm(): void {
     if (this.form.valid) {
-      // this._authenticationService.signup(this.form.getRawValue())
+      // this.authService.signup(this.form.getRawValue())
       //   .pipe(takeUntil(this._unsubscribe))
       //   .subscribe()
       console.log(this.form.getRawValue());
@@ -63,11 +64,11 @@ export class SignupComponent implements OnInit, OnDestroy {
   }
 
   navigateToSignin(): void {
-    this._router.navigate(['signin']);
+    this.router.navigate(['signin']);
   }
 
   ngOnDestroy(): void {
-    this._unsubscribe.next();
-    this._unsubscribe.complete();
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
   }
 }

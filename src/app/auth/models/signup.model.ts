@@ -1,8 +1,8 @@
-interface ISignup {
+interface SignupSpec {
     name: string;
     lastname: string;
     email: string;
     password: string; 
 }
 
-export type Signup = Readonly<ISignup>;
+export type Signup = Readonly<SignupSpec>;

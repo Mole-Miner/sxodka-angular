@@ -1,13 +1,11 @@
-import { HttpClient, HttpClientModule, HttpErrorResponse } from '@angular/common/http';
-import { fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
-import { of } from 'rxjs';
 
-import { AuthenticationService } from './authentication.service';
-import { environment } from '@core/env';
+import { AuthService } from './auth.service';
+import { environment } from '@shared/env';
 
 describe('AuthenticationService', () => {
-  let service: AuthenticationService;
+  let service: AuthService;
   let httpTestingController: HttpTestingController;
 
   const signinStub = {
@@ -30,9 +28,9 @@ describe('AuthenticationService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
-      providers: [AuthenticationService]
+      providers: [AuthService]
     });
-    service = TestBed.inject(AuthenticationService);
+    service = TestBed.inject(AuthService);
     httpTestingController = TestBed.inject(HttpTestingController);
   });
 

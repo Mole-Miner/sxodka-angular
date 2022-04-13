@@ -1,9 +1,9 @@
 import { HttpClientModule } from '@angular/common/http';
 import { TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { AuthenticationService } from '@core/services';
 
-import { AuthenticationGuard } from './authentication.guard';
+import { AuthService } from './auth.service';
+import { AuthenticationGuard } from './auth.guard';
 
 describe('AuthenticationGuard', () => {
   let guard: AuthenticationGuard;
@@ -11,7 +11,7 @@ describe('AuthenticationGuard', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [RouterTestingModule, HttpClientModule],
-      providers: [AuthenticationGuard, AuthenticationService]
+      providers: [AuthenticationGuard, AuthService]
     });
     guard = TestBed.inject(AuthenticationGuard);
   });

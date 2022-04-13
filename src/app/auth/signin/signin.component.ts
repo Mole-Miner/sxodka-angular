@@ -1,8 +1,9 @@
 import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AuthenticationService } from '@core/services';
 import { Subject, takeUntil } from 'rxjs';
+
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-signin',
@@ -11,15 +12,15 @@ import { Subject, takeUntil } from 'rxjs';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SigninComponent implements OnInit, OnDestroy {
-  private readonly _unsubscribe: Subject<void> = new Subject<void>();
+  private readonly unsubscribe$: Subject<void> = new Subject<void>();
 
   form!: FormGroup;
 
   hidePassword = true;
 
   constructor(
-    private readonly _router: Router,
-    private readonly _authenticationService: AuthenticationService
+    private readonly router: Router,
+    private readonly authService: AuthService
   ) { }
 
   get emailFormControl(): AbstractControl {
@@ -47,11 +48,11 @@ export class SigninComponent implements OnInit, OnDestroy {
   }
 
   navigateToSignup(): void {
-    this._router.navigate(['signup']);
+    this.router.navigate(['signup']);
   }
 
   ngOnDestroy(): void {
-    this._unsubscribe.next();
-    this._unsubscribe.complete();
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
   }
 }

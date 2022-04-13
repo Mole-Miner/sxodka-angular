@@ -1,40 +1,40 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { environment } from '@core/env';
-import { JwtTokens, Signin, Signup } from '@core/models';
+import { environment } from '@shared/env';
+import { JwtToken, Signin, Signup } from './models';
 import { of } from 'rxjs';
 import { catchError, Observable, tap } from 'rxjs';
 
 @Injectable()
-export class AuthenticationService {
+export class AuthService {
   private readonly ACCESS_TOKEN = 'ACCESS_TOKEN';
   private readonly REFRESH_TOKEN = 'REFRESH_TOKEN';
 
-  constructor(private readonly _http: HttpClient) {}
+  constructor(private readonly http: HttpClient) {}
 
-  signin(value: Signin): Observable<JwtTokens> {
-    return this._http.post<JwtTokens>(`${environment.api.server}/${environment.api.auth.prefix}/${environment.api.auth.target.signin}`, value).pipe(
+  signin(value: Signin): Observable<JwtToken> {
+    return this.http.post<JwtToken>(`${environment.api.server}/${environment.api.auth.prefix}/${environment.api.auth.target.signin}`, value).pipe(
       tap(response => this.storeTokens(response)),
       catchError(e => of(e.error))
     );
   }
 
-  signup(value: Signup): Observable<JwtTokens> {
-    return this._http.post<JwtTokens>(`${environment.api.server}/${environment.api.auth.prefix}/${environment.api.auth.target.signup}`, value).pipe(
+  signup(value: Signup): Observable<JwtToken> {
+    return this.http.post<JwtToken>(`${environment.api.server}/${environment.api.auth.prefix}/${environment.api.auth.target.signup}`, value).pipe(
       tap(response => this.storeTokens(response)),
       catchError(e => of(e.error))
     );
   }
 
   logout(): Observable<void> {
-    return this._http.get(`${environment.api.server}/${environment.api.auth.prefix}/${environment.api.auth.target.logout}`).pipe(
+    return this.http.get(`${environment.api.server}/${environment.api.auth.prefix}/${environment.api.auth.target.logout}`).pipe(
       tap(() => this.removeTokens()),
       catchError(e => of(e.error))
     );
   }
 
-  refresh(): Observable<JwtTokens> {
-    return this._http.get<JwtTokens>(`${environment.api.server}/${environment.api.auth.prefix}/${environment.api.auth.target.refresh}`).pipe(
+  refresh(): Observable<JwtToken> {
+    return this.http.get<JwtToken>(`${environment.api.server}/${environment.api.auth.prefix}/${environment.api.auth.target.refresh}`).pipe(
       tap(response => this.storeTokens(response)),
       catchError(e => of(e.error))
     )
@@ -52,7 +52,7 @@ export class AuthenticationService {
     return localStorage.getItem(this.REFRESH_TOKEN) ?? '';
   }
 
-  private storeTokens(value: JwtTokens): void {
+  private storeTokens(value: JwtToken): void {
     localStorage.setItem(this.ACCESS_TOKEN, value.access);
     localStorage.setItem(this.REFRESH_TOKEN, value.refresh);
   }

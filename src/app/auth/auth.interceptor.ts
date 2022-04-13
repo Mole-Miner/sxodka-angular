@@ -7,17 +7,18 @@ import {
   HttpErrorResponse
 } from '@angular/common/http';
 import { BehaviorSubject, catchError, filter, Observable, of, switchMap, take, throwError } from 'rxjs';
-import { AuthenticationService } from '@core/services';
+
+import { AuthService } from './auth.service';
 
 @Injectable()
 export class AuthenticationInterceptor implements HttpInterceptor {
   private isRefreshing = false;
   private refreshSubject: BehaviorSubject<any> = new BehaviorSubject<any>(null);
 
-  constructor(private readonly _authenticationService: AuthenticationService) {}
+  constructor(private readonly authService: AuthService) {}
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
-    return next.handle(this.setAuthorizationHeader(request, this._authenticationService.getAccessToken())).pipe(
+    return next.handle(this.setAuthorizationHeader(request, this.authService.getAccessToken())).pipe(
       catchError(e => {
         if (e instanceof HttpErrorResponse && e.status === 401 && !this.isRefreshing) {
           return this.on401Error(request, next);
@@ -40,7 +41,7 @@ export class AuthenticationInterceptor implements HttpInterceptor {
     if (!this.isRefreshing) {
       this.isRefreshing = true;
       this.refreshSubject.next(null);
-      return this._authenticationService.refresh().pipe(
+      return this.authService.refresh().pipe(
         switchMap(response => {
           this.isRefreshing = false;
           this.refreshSubject.next(response.access);

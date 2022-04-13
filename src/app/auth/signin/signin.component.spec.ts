@@ -2,14 +2,14 @@ import { HttpClientModule } from '@angular/common/http';
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
-import { AuthenticationService } from '@core/services';
 import { TranslateModule } from '@ngx-translate/core';
 import { Location } from '@angular/common';
 
-import { HomeComponent } from '../home/home.component';
+import { AuthService } from '../auth.service';
+import { HomeComponent } from '../../home/home.component';
 import { SignupComponent } from '../signup/signup.component';
 import { SigninComponent } from './signin.component';
-import { routes } from '../app-routing.module';
+import { routes } from '../../app-routing.module';
 
 describe('SigninComponent', () => {
   let component: SigninComponent;
@@ -29,7 +29,7 @@ describe('SigninComponent', () => {
         HttpClientModule,
         TranslateModule.forRoot()
       ],
-      providers: [AuthenticationService]
+      providers: [AuthService]
     })
     .compileComponents();
   });
