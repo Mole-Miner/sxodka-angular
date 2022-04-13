@@ -1,14 +1,16 @@
-import { TranslateModule } from '@ngx-translate/core';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Routes, RouterModule } from '@angular/router';
+import { TranslateModule } from '@ngx-translate/core';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AngularMaterial } from '@shared/angular-material';
 
 import { SigninComponent } from './signin/signin.component';
 import { SignupComponent } from './signup/signup.component';
-import { AuthenGuard } from './auth.guard';
+import { AuthGuard } from './auth.guard';
 import { AuthService } from './auth.service';
+import { AuthInterceptor } from './auth.interceptor';
 
 export const routes: Routes = [
   {
@@ -36,7 +38,12 @@ export const routes: Routes = [
   ],
   providers: [
     AuthService,
-    AuthenGuard
+    AuthGuard,
+    // {
+    //   provide: HTTP_INTERCEPTORS,
+    //   useClass: AuthInterceptor,
+    //   multi: true
+    // }
   ]
 })
 export class AuthModule { }

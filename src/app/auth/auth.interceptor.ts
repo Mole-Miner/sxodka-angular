@@ -11,7 +11,7 @@ import { BehaviorSubject, catchError, filter, Observable, of, switchMap, take, t
 import { AuthService } from './auth.service';
 
 @Injectable()
-export class AuthenticationInterceptor implements HttpInterceptor {
+export class AuthInterceptor implements HttpInterceptor {
   private isRefreshing = false;
   private refreshSubject: BehaviorSubject<any> = new BehaviorSubject<any>(null);
 

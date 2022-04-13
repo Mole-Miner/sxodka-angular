@@ -21,7 +21,7 @@ import { AppComponent } from './app.component';
         useFactory: HttpLoaderFactory,
         deps: [HttpClient]
       }
-    })
+    }),
   ],
   bootstrap: [AppComponent]
 })
