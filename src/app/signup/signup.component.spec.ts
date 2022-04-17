@@ -3,7 +3,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { TranslateModule } from '@ngx-translate/core';
 
-import { AuthService } from '../auth.service';
+import { AuthService } from '../shared/service/auth.service';
 import { SignupComponent } from './signup.component';
 
 describe('SignupComponent', () => {

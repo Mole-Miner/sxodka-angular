@@ -5,11 +5,11 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { TranslateModule } from '@ngx-translate/core';
 import { Location } from '@angular/common';
 
-import { AuthService } from '../auth.service';
-import { HomeComponent } from '../../home/home.component';
+import { AuthService } from '../shared/service/auth.service';
+import { HomeComponent } from '../home/home.component';
 import { SignupComponent } from '../signup/signup.component';
 import { SigninComponent } from './signin.component';
-import { routes } from '../../app-routing.module';
+import { routes } from '../app-routing.module';
 
 describe('SigninComponent', () => {
   let component: SigninComponent;

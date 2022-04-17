@@ -3,7 +3,7 @@ import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/fo
 import { Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 
-import { AuthService } from '../auth.service';
+import { AuthService } from '../shared/service/auth.service';
 
 @Component({
   selector: 'app-signin',

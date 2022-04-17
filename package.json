@@ -23,6 +23,7 @@
     "@angular/router": "~13.2.6",
     "@ngx-translate/core": "^14.0.0",
     "@ngx-translate/http-loader": "^7.0.0",
+    "@ngxs/storage-plugin": "^3.7.3",
     "@ngxs/store": "^3.7.3",
     "rxjs": "~7.4.0",
     "tslib": "^2.3.0",

@@ -1,11 +1,17 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
+import { SigninComponent } from './signin/signin.component';
+import { SignupComponent } from './signup/signup.component';
+
 export const routes: Routes = [
   {
-    path: '',
-    canLoad: [],
-    loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule)
+    path: 'signin',
+    component: SigninComponent
+  },
+  {
+    path: 'signup',
+    component: SignupComponent
   },
   {
     path: '**',

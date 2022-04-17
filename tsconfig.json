@@ -24,8 +24,7 @@
     ],
     "paths": {
       "@shared/env": ["src/environments/environment"],
-      "@shared/angular-material": ["src/app/shared/angular-material/index"],
-      "@shared/forms": ["src/app/shared/forms/index"],
+      "@shared": ["src/app/shared/index"],
     }
   },
   "angularCompilerOptions": {
