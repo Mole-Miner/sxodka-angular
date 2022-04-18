@@ -1,7 +1,11 @@
+import { SearchService } from './search.service';
+import { NgxsModule } from '@ngxs/store';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { SearchComponent } from './search.component';
 import { Routes, RouterModule } from '@angular/router';
+
+import { SearchComponent } from './search.component';
+import { SearchState } from './search.state';
 
 export const routes: Routes = [
   {
@@ -16,7 +20,9 @@ export const routes: Routes = [
   ],
   imports: [
     CommonModule,
-    RouterModule.forChild(routes)
-  ]
+    RouterModule.forChild(routes),
+    NgxsModule.forFeature([SearchState])
+  ],
+  providers: [SearchService]
 })
 export class SearchModule { }
