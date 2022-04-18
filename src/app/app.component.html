@@ -1,1 +1,20 @@
-<router-outlet></router-outlet>
+<div class="app">
+    <header class="app__header">
+        <button mat-raised-button (click)="drawer.toggle()">Menu</button>
+        <input> 
+    </header>
+    
+    <main class="app__main" >
+        <mat-drawer-container class="app__main-outlet" [hasBackdrop]="true">
+            <mat-drawer #drawer [mode]="'side'">
+                <nav>
+                    <a routerLink="signin">Signin</a>
+                    <a routerLink="signup">Signup</a>
+                </nav>
+            </mat-drawer>
+            <mat-drawer-content>
+                <router-outlet></router-outlet>
+            </mat-drawer-content>
+        </mat-drawer-container>
+    </main>
+</div>

@@ -14,6 +14,10 @@ export const routes: Routes = [
     component: SignupComponent
   },
   {
+    path: '',
+    loadChildren: () => import('./search/search.module').then(m => m.SearchModule)
+  },
+  {
     path: '**',
     pathMatch: 'full',
     redirectTo: ''

@@ -14,8 +14,8 @@ import { environment } from '@shared/env';
 import { AngularMaterial } from '@shared';
 import { SigninComponent } from './signin/signin.component';
 import { SignupComponent } from './signup/signup.component';
-import { AuthGuard } from './shared/guard/auth.guard';
-import { AuthService } from './shared/service/auth.service';
+import { AuthGuard } from '@shared';
+import { AuthService } from '@shared';
 
 @NgModule({
   declarations: [AppComponent, SigninComponent, SignupComponent],
@@ -30,7 +30,9 @@ import { AuthService } from './shared/service/auth.service';
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
-        useFactory: HttpLoaderFactory,
+        useFactory: function(http: HttpClient): TranslateHttpLoader {
+          return new TranslateHttpLoader(http);
+        },
         deps: [HttpClient]
       }
     }),
@@ -43,7 +45,3 @@ import { AuthService } from './shared/service/auth.service';
   bootstrap: [AppComponent]
 })
 export class AppModule { }
-
-export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
-  return new TranslateHttpLoader(http);
-}
