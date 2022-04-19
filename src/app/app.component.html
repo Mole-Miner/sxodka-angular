@@ -7,9 +7,11 @@
     <main class="app__main" >
         <mat-drawer-container class="app__main-outlet" [hasBackdrop]="true">
             <mat-drawer #drawer [mode]="'side'">
-                <nav>
+                <nav class="app__main-nav">
                     <a routerLink="signin">Signin</a>
                     <a routerLink="signup">Signup</a>
+                    <a routerLink="search">Search</a>
+                    <a routerLink="map">Map</a>
                 </nav>
             </mat-drawer>
             <mat-drawer-content>

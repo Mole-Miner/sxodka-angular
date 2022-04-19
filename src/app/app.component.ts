@@ -9,9 +9,9 @@ import { TranslateService } from '@ngx-translate/core';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AppComponent implements OnInit {
-  constructor(private readonly _trasnlateService: TranslateService) {}
+  constructor(private readonly trasnlateService: TranslateService) { }
 
   ngOnInit(): void {
-    this._trasnlateService.setDefaultLang('ua');
+    this.trasnlateService.setDefaultLang('ua');
   }
 }

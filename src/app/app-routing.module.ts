@@ -14,8 +14,12 @@ export const routes: Routes = [
     component: SignupComponent
   },
   {
-    path: '',
+    path: 'search',
     loadChildren: () => import('./search/search.module').then(m => m.SearchModule)
+  },
+  {
+    path: 'map',
+    loadChildren: () => import('./map/map.module').then(m => m.MapModule)
   },
   {
     path: '**',
