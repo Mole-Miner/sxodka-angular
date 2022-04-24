@@ -1,8 +1,10 @@
-import { catchError, Subject } from 'rxjs';
+import { catchError, map, Subject, switchMap, tap, mapTo, takeUntil } from 'rxjs';
 import { GeolocatioService } from '../shared/service/geolocation.service';
 import { Store } from '@ngxs/store';
 import { AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, OnInit, ViewChild, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { LeafletService } from './leaflet.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { LatLngLiteral, Marker } from 'leaflet';
 
 @Component({
   selector: 'app-map',
@@ -11,35 +13,44 @@ import { LeafletService } from './leaflet.service';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
+  private readonly _destroy$: Subject<void> = new Subject<void>();
+
   @ViewChild('leaflet', { static: false })
   readonly mapRef!: ElementRef<HTMLDivElement>;
 
-  private mapResizeObserver!: ResizeObserver;
+  private _mapResizeObserver!: ResizeObserver;
+
+  private _latlng!: LatLngLiteral;
 
   constructor(
-    private readonly leaflet: LeafletService,
-    private readonly geolocation: GeolocatioService
+    private readonly _leaflet: LeafletService,
+    private readonly _geolocation: GeolocatioService,
+    private readonly _snackBar: MatSnackBar
   ) { }
 
+  createMarker(): void {
+    this._leaflet.createMarker(this._latlng, { draggable: true }).pipe(
+      switchMap((marker) => this._leaflet.flyTo(marker.getLatLng()).pipe(mapTo(marker))),
+      switchMap((marker) => this._snackBar.open('Drag marker', 'Save').onAction().pipe(mapTo(marker))),
+      takeUntil(this._destroy$)
+    ).subscribe((marker) => console.log(marker.getLatLng()));
+  }
+
   ngOnInit(): void {
-    this.geolocation.getCurrentPosition().subscribe({
-      next: (position: GeolocationPosition) => {
-        const { coords } = position;
-        const { latitude, longitude } = coords;
-        this.leaflet.createMarker([latitude, longitude]);
-        this.leaflet.flyTo([latitude, longitude]);
-      },
-      error: (error: GeolocationPositionError) => console.log(error)
-    });
+    this._geolocation.getCurrentPosition().pipe(
+      map(({ coords }: GeolocationPosition) => ({ lat: coords.latitude, lng: coords.longitude }) as LatLngLiteral)
+    ).subscribe((value: LatLngLiteral) => this._latlng = value);
   }
 
   ngAfterViewInit(): void {
-    this.leaflet.init();
-    this.mapResizeObserver = new ResizeObserver(() => this.leaflet.invalidateSize());
-    this.mapResizeObserver.observe(this.mapRef.nativeElement);
+    this._leaflet.init();
+    this._mapResizeObserver = new ResizeObserver(() => this._leaflet.invalidateSize());
+    this._mapResizeObserver.observe(this.mapRef.nativeElement);
   }
 
   ngOnDestroy(): void {
-    this.mapResizeObserver.unobserve(this.mapRef.nativeElement);
+    this._mapResizeObserver.unobserve(this.mapRef.nativeElement);
+    this._destroy$.next();
+    this._destroy$.complete();
   }
 }

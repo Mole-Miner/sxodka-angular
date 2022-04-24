@@ -1,6 +1,6 @@
 import { mapTo, Observable, of, tap, catchError, throwError } from 'rxjs';
 import { Injectable } from '@angular/core';
-import { Map, Control, TileLayer, Marker, LatLng, LatLngExpression } from 'leaflet';
+import { Map, Control, TileLayer, Marker, LatLng, LatLngExpression, LeafletEvent, MarkerOptions, ZoomPanOptions } from 'leaflet';
 
 @Injectable()
 export class LeafletService {
@@ -26,12 +26,12 @@ export class LeafletService {
         }).addTo(this._map);
     }
 
-    flyTo(latLng: LatLngExpression): void {
-        this._map.flyTo(latLng);
+    flyTo(latlng: LatLngExpression, zoom?: number, options?: ZoomPanOptions): Observable<LatLngExpression> {
+        return of(this._map.flyTo(latlng, zoom, options)).pipe(mapTo(latlng));
     }
 
-    createMarker(latlng: LatLngExpression): void {
-        new Marker(latlng).addTo(this._map);
+    createMarker<T>(latlng: LatLngExpression, options: MarkerOptions): Observable<Marker<T>> {
+        return of(new Marker(latlng, options)).pipe(tap((marker: Marker) => marker.addTo(this._map)));
     }
 
     zoomIn(delta?: number): void {

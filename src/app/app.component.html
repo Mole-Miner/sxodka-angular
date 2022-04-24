@@ -1,22 +1,23 @@
 <div class="app">
-    <header class="app__header">
-        <button mat-raised-button (click)="drawer.toggle()">Menu</button>
-        <input> 
-    </header>
-    
-    <main class="app__main" >
-        <mat-drawer-container class="app__main-outlet" [hasBackdrop]="true">
-            <mat-drawer #drawer [mode]="'side'">
-                <nav class="app__main-nav">
-                    <a routerLink="signin">Signin</a>
-                    <a routerLink="signup">Signup</a>
-                    <a routerLink="search">Search</a>
-                    <a routerLink="map">Map</a>
-                </nav>
-            </mat-drawer>
-            <mat-drawer-content>
-                <router-outlet></router-outlet>
-            </mat-drawer-content>
-        </mat-drawer-container>
-    </main>
+    <mat-toolbar class="app__header">
+        <button (click)="drawer.toggle()" mat-icon-button class="example-icon"
+            aria-label="Example icon-button with menu icon">
+            <mat-icon>menu</mat-icon>
+        </button>
+        <span>My App</span>
+    </mat-toolbar>
+
+    <mat-drawer-container class="app__main" [hasBackdrop]="true">
+        <mat-drawer #drawer [mode]="'side'">
+            <nav class="app__main-nav">
+                <a routerLink="signin">Signin</a>
+                <a routerLink="signup">Signup</a>
+                <a routerLink="search">Search</a>
+                <a routerLink="map">Map</a>
+            </nav>
+        </mat-drawer>
+        <mat-drawer-content>
+            <router-outlet></router-outlet>
+        </mat-drawer-content>
+    </mat-drawer-container>
 </div>
