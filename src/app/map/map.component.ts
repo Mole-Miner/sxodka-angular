@@ -4,7 +4,7 @@ import { Store } from '@ngxs/store';
 import { AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, OnInit, ViewChild, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { LeafletService } from './leaflet.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { LatLngLiteral, Marker } from 'leaflet';
+import { LatLngLiteral, Layer, Marker } from 'leaflet';
 
 @Component({
   selector: 'app-map',
@@ -30,8 +30,13 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
 
   createMarker(): void {
     this._leaflet.createMarker(this._latlng, { draggable: true }).pipe(
-      switchMap((marker) => this._leaflet.flyTo(marker.getLatLng()).pipe(mapTo(marker))),
-      switchMap((marker) => this._snackBar.open('Drag marker', 'Save').onAction().pipe(mapTo(marker))),
+      switchMap((marker) => this._leaflet.flyTo(marker.getLatLng()).pipe(
+        mapTo(marker)
+      )),
+      switchMap((marker) => this._snackBar.open('Drag marker', 'Save').onAction().pipe(
+        mapTo(marker),
+        tap((marker) => marker.dragging?.disable())
+      )),
       takeUntil(this._destroy$)
     ).subscribe((marker) => console.log(marker.getLatLng()));
   }

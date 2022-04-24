@@ -1,6 +1,6 @@
 import { mapTo, Observable, of, tap, catchError, throwError } from 'rxjs';
 import { Injectable } from '@angular/core';
-import { Map, Control, TileLayer, Marker, LatLng, LatLngExpression, LeafletEvent, MarkerOptions, ZoomPanOptions } from 'leaflet';
+import { Map, Control, TileLayer, Marker, LatLng, LatLngExpression, LeafletEvent, MarkerOptions, ZoomPanOptions, Layer } from 'leaflet';
 
 @Injectable()
 export class LeafletService {
@@ -26,11 +26,15 @@ export class LeafletService {
         }).addTo(this._map);
     }
 
+    removeLayer<T extends Layer>(layer: T): Observable<T> {
+        return of(this._map.removeLayer(layer)).pipe(mapTo(layer));
+    }
+
     flyTo(latlng: LatLngExpression, zoom?: number, options?: ZoomPanOptions): Observable<LatLngExpression> {
         return of(this._map.flyTo(latlng, zoom, options)).pipe(mapTo(latlng));
     }
 
-    createMarker<T>(latlng: LatLngExpression, options: MarkerOptions): Observable<Marker<T>> {
+    createMarker<T>(latlng: LatLngExpression, options?: MarkerOptions): Observable<Marker<T>> {
         return of(new Marker(latlng, options)).pipe(tap((marker: Marker) => marker.addTo(this._map)));
     }
 
