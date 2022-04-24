@@ -4,6 +4,7 @@ import { Select, Store } from '@ngxs/store';
 
 import { SearchAction } from './search.action';
 import { SearchState } from './search.state';
+import { GeolocatioService } from '@shared';
 
 @Component({
   selector: 'app-search',
@@ -15,7 +16,10 @@ export class SearchComponent implements OnInit {
   @Select(SearchState.items)
   readonly search$!: Observable<any[]>;
 
-  constructor(private readonly store: Store) { }
+  constructor(
+    private readonly store: Store,
+    private readonly geolocation: GeolocatioService,
+  ) { }
 
   ngOnInit(): void {
     this.store.dispatch(new SearchAction.GetAll());

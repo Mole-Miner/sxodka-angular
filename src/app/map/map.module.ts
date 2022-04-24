@@ -1,3 +1,4 @@
+import { GeolocatioService } from '../shared/service/geolocation.service';
 import { LeafletService } from './leaflet.service';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -20,7 +21,8 @@ export const routes: Routes = [
     RouterModule.forChild(routes),
   ],
   providers: [
-    LeafletService
+    LeafletService,
+    GeolocatioService
   ]
 })
 export class MapModule { }

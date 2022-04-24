@@ -26,6 +26,10 @@ export class LeafletService {
         }).addTo(this._map);
     }
 
+    flyTo(latLng: LatLngExpression): void {
+        this._map.flyTo(latLng);
+    }
+
     createMarker(latlng: LatLngExpression): void {
         new Marker(latlng).addTo(this._map);
     }

@@ -6,6 +6,7 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { SearchComponent } from './search.component';
 import { SearchState } from './search.state';
+import { GeolocatioService } from '@shared';
 
 export const routes: Routes = [
   {
@@ -23,6 +24,6 @@ export const routes: Routes = [
     RouterModule.forChild(routes),
     NgxsModule.forFeature([SearchState])
   ],
-  providers: [SearchService]
+  providers: [SearchService, GeolocatioService]
 })
 export class SearchModule { }

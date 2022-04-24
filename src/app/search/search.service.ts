@@ -7,15 +7,13 @@ export class SearchService {
   constructor() { }
 
   getAll(): Observable<any[]> {
-    return of([
-      {
-        title: 'first',
-        description: `it's first post`
-      },
-      {
-        title: 'second',
-        description: `it's second post`
-      }
-    ]);
+    const mock = [];
+    for (let i = 0; i < 40; i++) {
+      mock.push({
+        title: `title ${i}`,
+        description: `description ${i}`
+      });
+    }
+    return of(mock);
   }
 }
