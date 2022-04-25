@@ -1,4 +1,5 @@
-import { catchError, map, Subject, switchMap, tap, mapTo, takeUntil } from 'rxjs';
+import { MapSnackBarComponent } from './map-snack-bar/map-snack-bar.component';
+import { catchError, map, Subject, switchMap, tap, mapTo, takeUntil, iif, of, NEVER } from 'rxjs';
 import { GeolocatioService } from '../shared/service/geolocation.service';
 import { Store } from '@ngxs/store';
 import { AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, OnInit, ViewChild, OnDestroy, ChangeDetectorRef } from '@angular/core';
@@ -31,14 +32,13 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
   createMarker(): void {
     this._leaflet.createMarker(this._latlng, { draggable: true }).pipe(
       switchMap((marker) => this._leaflet.flyTo(marker.getLatLng()).pipe(
-        mapTo(marker)
-      )),
-      switchMap((marker) => this._snackBar.open('Drag marker', 'Save').onAction().pipe(
-        mapTo(marker),
-        tap((marker) => marker.dragging?.disable())
-      )),
+        switchMap((latlng) => this._snackBar.openFromComponent(MapSnackBarComponent).afterDismissed().pipe(
+          tap(() => marker.dragging?.disable()),
+          switchMap(({ dismissedByAction }) => dismissedByAction ? of(latlng) : this._leaflet.removeLayer<Marker>(marker))
+        )),    
+      )),         
       takeUntil(this._destroy$)
-    ).subscribe((marker) => console.log(marker.getLatLng()));
+    ).subscribe((value) => console.log(value));
   }
 
   ngOnInit(): void {
