@@ -5,7 +5,7 @@ import { Store } from '@ngxs/store';
 import { AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, OnInit, ViewChild, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { LeafletService } from './leaflet.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { LatLngLiteral, Layer, Marker } from 'leaflet';
+import { Icon, LatLngLiteral, Layer, Marker } from 'leaflet';
 
 @Component({
   selector: 'app-map',
@@ -30,13 +30,28 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
   ) { }
 
   createMarker(): void {
-    this._leaflet.createMarker(this._latlng, { draggable: true }).pipe(
+    const iconRetinaUrl = 'assets/marker-icon-2x.png';
+    const iconUrl = 'assets/marker-icon.png';
+    const shadowUrl = 'assets/marker-shadow.png';
+    this._leaflet.createMarker(this._latlng, {
+      draggable: true,
+      icon: new Icon({
+        iconRetinaUrl,
+        iconUrl,
+        shadowUrl,
+        iconSize: [25, 41],
+        iconAnchor: [12, 41],
+        popupAnchor: [1, -34],
+        tooltipAnchor: [16, -28],
+        shadowSize: [41, 41]
+      })
+    }).pipe(
       switchMap((marker) => this._leaflet.flyTo(marker.getLatLng()).pipe(
         switchMap((latlng) => this._snackBar.openFromComponent(MapSnackBarComponent).afterDismissed().pipe(
           tap(() => marker.dragging?.disable()),
           switchMap(({ dismissedByAction }) => dismissedByAction ? of(latlng) : this._leaflet.removeLayer<Marker>(marker))
-        )),    
-      )),         
+        )),
+      )),
       takeUntil(this._destroy$)
     ).subscribe((value) => console.log(value));
   }
