@@ -1,4 +1,7 @@
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { GeolocatioService } from '@shared';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { LeafletService } from './leaflet.service';
 
 import { MapComponent } from './map.component';
 
@@ -8,9 +11,11 @@ describe('MapComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ MapComponent ]
+      declarations: [MapComponent],
+      imports: [MatSnackBarModule],
+      providers: [LeafletService, GeolocatioService]
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {

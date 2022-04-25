@@ -1,3 +1,6 @@
+import { GeolocatioService } from '@shared';
+import { SearchService } from './search.service';
+import { Store, NgxsModule, StateStream } from '@ngxs/store';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SearchComponent } from './search.component';
@@ -8,9 +11,11 @@ describe('SearchComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ SearchComponent ]
+      declarations: [SearchComponent],
+      providers: [SearchService, GeolocatioService],
+      imports: [NgxsModule.forRoot()]
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {
