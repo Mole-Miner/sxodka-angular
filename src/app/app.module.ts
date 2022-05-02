@@ -6,19 +6,24 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { NgxsModule } from '@ngxs/store';
+import { NgxsStoragePluginModule } from '@ngxs/storage-plugin';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
 import { environment } from '@shared/env';
 import { AngularMaterial } from '@shared';
-import { SigninComponent } from './signin/signin.component';
-import { SignupComponent } from './signup/signup.component';
-import { AuthGuard } from '@shared';
-import { AuthService } from '@shared';
+import { LoginComponent } from './auth/login/login.component';
+import { SignupComponent } from './auth/signup/signup.component';
+import { AuthState } from './auth/auth.state';
+import { AuthService } from './auth/auth.service';
 
 @NgModule({
-  declarations: [AppComponent, SigninComponent, SignupComponent],
+  declarations: [
+    AppComponent,
+    LoginComponent,
+    SignupComponent,
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -36,12 +41,12 @@ import { AuthService } from '@shared';
         deps: [HttpClient]
       }
     }),
-    NgxsModule.forRoot([], { developmentMode: !environment.production })
+    NgxsModule.forRoot([AuthState], { developmentMode: !environment.production }),
+    NgxsStoragePluginModule.forRoot({
+      key: 'auth.token'
+    })
   ],
-  providers: [
-    AuthService,
-    AuthGuard
-  ],
+  providers: [AuthService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

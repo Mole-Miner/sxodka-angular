@@ -3,15 +3,13 @@ import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/fo
 import { Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 
-import { AuthService } from '../shared/service/auth.service';
-
 @Component({
-  selector: 'app-signin',
-  templateUrl: './signin.component.html',
-  styleUrls: ['./signin.component.scss'],
+  selector: 'app-login',
+  templateUrl: './login.component.html',
+  styleUrls: ['./login.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class SigninComponent implements OnInit, OnDestroy {
+export class LoginComponent implements OnInit, OnDestroy {
   private readonly unsubscribe$: Subject<void> = new Subject<void>();
 
   form!: FormGroup;
@@ -19,8 +17,7 @@ export class SigninComponent implements OnInit, OnDestroy {
   hidePassword = true;
 
   constructor(
-    private readonly router: Router,
-    private readonly authService: AuthService
+    private readonly router: Router
   ) { }
 
   get emailFormControl(): AbstractControl {

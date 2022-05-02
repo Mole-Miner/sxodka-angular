@@ -4,7 +4,6 @@ import { Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 
 import { passwordEqualityValidator } from '@shared';
-import { AuthService } from '../shared/service/auth.service';
 
 @Component({
   selector: 'app-signup',
@@ -21,7 +20,6 @@ export class SignupComponent implements OnInit, OnDestroy {
 
   constructor(
     private readonly router: Router,
-    private readonly authService: AuthService
   ) {}
 
   get nameFormControl(): AbstractControl {
