@@ -1,6 +1,15 @@
-<div class="search">
+<!-- <div class="search">
     <div *ngFor="let item of search$ | async">
         <p>{{item.title}}</p>
         <p>{{item.description}}</p>
     </div>
-</div>
+</div> -->
+
+<cdk-virtual-scroll-viewport #scroller itemSize="50" class="search">
+    <mat-list>
+        <mat-list-item *cdkVirtualFor="let item of search$ | async">
+            <p>{{item.title}}</p>
+            <p>{{item.description}}</p>
+        </mat-list-item>
+    </mat-list>
+</cdk-virtual-scroll-viewport>

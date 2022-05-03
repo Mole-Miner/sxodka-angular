@@ -6,7 +6,8 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { SearchComponent } from './search.component';
 import { SearchState } from './search.state';
-import { GeolocatioService } from '@shared';
+import { GeolocatioService, AngularMaterial } from '@shared';
+import { ScrollingModule } from '@angular/cdk/scrolling';
 
 export const routes: Routes = [
   {
@@ -22,7 +23,9 @@ export const routes: Routes = [
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
-    NgxsModule.forFeature([SearchState])
+    NgxsModule.forFeature([SearchState]),
+    ScrollingModule,
+    AngularMaterial
   ],
   providers: [SearchService, GeolocatioService]
 })

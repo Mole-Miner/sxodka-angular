@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Action, createSelector, Select, Selector, State, StateContext } from '@ngxs/store';
-import { tap } from 'rxjs';
+import { tap, Observable } from 'rxjs';
 
 import { SearchAction } from './search.action';
 import { SearchService } from './search.service';
@@ -33,4 +33,15 @@ export class SearchState {
         );
     }
 
+    @Action(SearchAction.FindAll)
+    findAll({ patchState, getState }: StateContext<SearchStateModel>): Observable<any[]> {
+        return this.searchService.getAll().pipe(
+            tap((response) => {
+                const { items } = getState();
+                return patchState({
+                    items: [...items, ...response]
+                })
+            })
+        )
+    }
 }
