@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { filter, map, Observable, of, pairwise, tap, throttleTime, switchMap, share, Subject, takeUntil } from 'rxjs';
 import { ChangeDetectionStrategy, Component, OnInit, ViewChild, AfterViewInit, OnDestroy } from '@angular/core';
 import { Select, Store } from '@ngxs/store';
@@ -27,7 +28,12 @@ export class SearchComponent implements OnInit, AfterViewInit, OnDestroy {
   constructor(
     private readonly store: Store,
     private readonly geolocation: GeolocatioService,
+    private readonly router: Router
   ) { }
+
+  openPostOnMap(post: any): void {
+    this.router.navigate(['map'], { state: post });
+  }
 
   ngOnInit(): void {
     this.store.dispatch(new SearchAction.FindAll());
@@ -45,7 +51,7 @@ export class SearchComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-      this.destroy$.next();
-      this.destroy$.complete();
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }

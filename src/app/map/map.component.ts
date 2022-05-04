@@ -6,6 +6,8 @@ import { AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, OnInit, 
 import { LeafletService } from './leaflet.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Icon, LatLngLiteral, Layer, Marker } from 'leaflet';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-map',
@@ -14,26 +16,28 @@ import { Icon, LatLngLiteral, Layer, Marker } from 'leaflet';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
-  private readonly _destroy$: Subject<void> = new Subject<void>();
+  private readonly destroy$: Subject<void> = new Subject<void>();
 
   @ViewChild('leaflet', { static: false })
   readonly mapRef!: ElementRef<HTMLDivElement>;
 
-  private _mapResizeObserver!: ResizeObserver;
+  private mapResizeObserver!: ResizeObserver;
 
-  private _latlng!: LatLngLiteral;
+  private latlng!: LatLngLiteral;
 
   constructor(
-    private readonly _leaflet: LeafletService,
-    private readonly _geolocation: GeolocatioService,
-    private readonly _snackBar: MatSnackBar
+    private readonly leaflet: LeafletService,
+    private readonly geolocation: GeolocatioService,
+    private readonly snackBar: MatSnackBar,
+    private readonly location: Location,
+    private readonly cdr: ChangeDetectorRef
   ) { }
 
   createMarker(): void {
     const iconRetinaUrl = 'assets/marker-icon-2x.png';
     const iconUrl = 'assets/marker-icon.png';
     const shadowUrl = 'assets/marker-shadow.png';
-    this._leaflet.createMarker(this._latlng, {
+    this.leaflet.createMarker(this.latlng, {
       draggable: true,
       icon: new Icon({
         iconRetinaUrl,
@@ -46,31 +50,73 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
         shadowSize: [41, 41]
       })
     }).pipe(
-      switchMap((marker) => this._leaflet.flyTo(marker.getLatLng()).pipe(
-        switchMap((latlng) => this._snackBar.openFromComponent(MapSnackBarComponent).afterDismissed().pipe(
+      switchMap((marker) => this.leaflet.flyTo(marker.getLatLng()).pipe(
+        switchMap((latlng) => this.snackBar.openFromComponent(MapSnackBarComponent).afterDismissed().pipe(
           tap(() => marker.dragging?.disable()),
-          switchMap(({ dismissedByAction }) => dismissedByAction ? of(latlng) : this._leaflet.removeLayer<Marker>(marker))
+          switchMap(({ dismissedByAction }) => dismissedByAction ? of(latlng) : this.leaflet.removeLayer<Marker>(marker))
         )),
       )),
-      takeUntil(this._destroy$)
+      takeUntil(this.destroy$)
     ).subscribe((value) => console.log(value));
   }
 
-  ngOnInit(): void {
-    this._geolocation.getCurrentPosition().pipe(
+  private onGeolocation(): void {
+    this.geolocation.getCurrentPosition().pipe(
       map(({ coords }: GeolocationPosition) => ({ lat: coords.latitude, lng: coords.longitude }) as LatLngLiteral)
-    ).subscribe((value: LatLngLiteral) => this._latlng = value);
+    ).subscribe((value: LatLngLiteral) => this.latlng = value);
+  }
+
+  private onPost(): void {
+    const post: any = this.location.getState();
+    if (!post.src) {
+      return;
+    }
+
+    const { lat, lng, src } = post;
+    const iconRetinaUrl = 'assets/marker-icon-2x.png';
+    const iconUrl = 'assets/marker-icon.png';
+    const shadowUrl = 'assets/marker-shadow.png';
+    this.leaflet.createMarker([lat, lng], {
+      draggable: false,
+      icon: new Icon({
+        iconRetinaUrl,
+        iconUrl,
+        shadowUrl,
+        iconSize: [25, 41],
+        iconAnchor: [12, 41],
+        popupAnchor: [1, -34],
+        tooltipAnchor: [16, -28],
+        shadowSize: [41, 41]
+      })
+    }).subscribe(() => console.log('created'));
+    
+    // this.leaflet.createMarker([lat, lng], {
+    //   draggable: false,
+    //   icon: new Icon({
+    //     iconUrl: src,
+    //     iconSize: [25, 41],
+    //     iconAnchor: [12, 41],
+    //     popupAnchor: [1, -34],
+    //     tooltipAnchor: [16, -28],
+    //     shadowSize: [41, 41]
+    //   })
+    // }).subscribe(() => console.log('created'));
+  }
+
+  ngOnInit(): void {
+    this.onGeolocation();
   }
 
   ngAfterViewInit(): void {
-    this._leaflet.init();
-    this._mapResizeObserver = new ResizeObserver(() => this._leaflet.invalidateSize());
-    this._mapResizeObserver.observe(this.mapRef.nativeElement);
+    this.leaflet.init();
+    this.mapResizeObserver = new ResizeObserver(() => this.leaflet.invalidateSize());
+    this.mapResizeObserver.observe(this.mapRef.nativeElement);
+    this.onPost();
   }
 
   ngOnDestroy(): void {
-    this._mapResizeObserver.unobserve(this.mapRef.nativeElement);
-    this._destroy$.next();
-    this._destroy$.complete();
+    this.mapResizeObserver.unobserve(this.mapRef.nativeElement);
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }
