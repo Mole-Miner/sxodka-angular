@@ -31,35 +31,11 @@
 }
 
 .app {
-  width: 100%;
   height: 100%;
 
-  &__header {
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    height: 5rem;
-    // background-color: #fafafa;
+  &__menu-btn {
+    position: fixed !important;
+    top: 5px;
+    left: 5px;
   }
-
-  &__main {
-    height: calc(100% - 5rem);
-    overflow-y: auto;
-  }
-
-  &__main-drawer {
-    height: 100%;
-  }
-
-  &__main-outlet {
-    width: 100%;
-    height: 100%;
-  }
-
-  &__main-nav {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 10rem;
-  }
-}
+} 

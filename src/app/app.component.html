@@ -1,21 +1,6 @@
 <div class="app">
-    <mat-toolbar class="app__header">
-        <button (click)="drawer.toggle()" mat-icon-button>
-            <mat-icon>menu</mat-icon>
-        </button>
-    </mat-toolbar>
-
-    <div class="app__main">
-        <mat-drawer-container class="app__main-drawer" [hasBackdrop]="true">
-            <mat-drawer #drawer [mode]="'side'">
-                <nav class="app__main-nav">
-                    <a routerLink="search">Search</a>
-                    <a routerLink="map">Map</a>
-                </nav>
-            </mat-drawer>
-            <mat-drawer-content class="app__main-outlet">
-                <router-outlet></router-outlet>
-            </mat-drawer-content>
-        </mat-drawer-container>
-    </div>
+    <button mat-icon-button class="app__menu-btn">
+        <mat-icon>menu</mat-icon>
+    </button>
+    <router-outlet></router-outlet>
 </div>
