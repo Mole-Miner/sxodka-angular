@@ -9,6 +9,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatListModule } from '@angular/material/list';
+import { MatCardModule } from '@angular/material/card';
 
 @NgModule({
     imports: [CommonModule],
@@ -21,7 +22,8 @@ import { MatListModule } from '@angular/material/list';
         MatSelectModule,
         MatToolbarModule,
         MatSnackBarModule,
-        MatListModule
+        MatListModule,
+        MatCardModule
     ]
 })
 export class AngularMaterial { }
