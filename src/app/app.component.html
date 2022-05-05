@@ -1,17 +1,14 @@
 <div class="app">
     <nav class="app__menu">
-        <div>
-            <span class="app__menu-icon">
-                <mat-icon>menu</mat-icon>
-            </span>
-            <span class="app__menu-icon">
-                <mat-icon routerLink="">home</mat-icon>
-            </span>
-            <span class="app__menu-icon">
-                <mat-icon routerLink="map">map</mat-icon>
-            </span>
-        </div>
+        <a routerLink="">
+            <mat-icon class="app__menu-icon">home</mat-icon>
+        </a>
+        <a routerLink="map">
+            <mat-icon class="app__menu-icon">map</mat-icon>
+        </a>
     </nav>
 
-    <router-outlet></router-outlet>
+    <main class="app__outlet">
+        <router-outlet></router-outlet>
+    </main>
 </div>
