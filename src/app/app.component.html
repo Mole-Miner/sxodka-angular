@@ -1,6 +1,17 @@
 <div class="app">
-    <button mat-icon-button class="app__menu-btn">
-        <mat-icon>menu</mat-icon>
-    </button>
+    <nav class="app__menu">
+        <div>
+            <span class="app__menu-icon">
+                <mat-icon>menu</mat-icon>
+            </span>
+            <span class="app__menu-icon">
+                <mat-icon routerLink="">home</mat-icon>
+            </span>
+            <span class="app__menu-icon">
+                <mat-icon routerLink="map">map</mat-icon>
+            </span>
+        </div>
+    </nav>
+
     <router-outlet></router-outlet>
 </div>

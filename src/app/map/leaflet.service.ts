@@ -1,6 +1,6 @@
 import { mapTo, Observable, of, tap, catchError, throwError } from 'rxjs';
 import { Injectable } from '@angular/core';
-import { Map, Control, TileLayer, Marker, LatLng, LatLngExpression, LeafletEvent, MarkerOptions, ZoomPanOptions, Layer } from 'leaflet';
+import { Map, Control, TileLayer, Marker, LatLng, LatLngExpression, LeafletEvent, MarkerOptions, ZoomPanOptions, Layer, GridLayer } from 'leaflet';
 
 @Injectable()
 export class LeafletService {
@@ -19,9 +19,20 @@ export class LeafletService {
     }
 
     private _tileLayer(): void {
+        // const originalInitTile = (GridLayer.prototype as any)._initTile;
+        // GridLayer.include({
+        //     _initTile: function(tile: any) {
+        //         originalInitTile.call(this, tile);
+        //         const tileSize = this.getTileSize();
+        //         tile.style.width = tileSize.x + 1 + 'px';
+        //         tile.style.height = tileSize.y + 1 + 'px';
+        //     }
+        // });
+
         new TileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            maxZoom: 18,
             minZoom: 3,
+            detectRetina: true,
+            tileSize: 256,
             attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
         }).addTo(this._map);
     }
