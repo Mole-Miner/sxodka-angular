@@ -1,0 +1,37 @@
+.library {
+    height: 100%;
+
+    &__controls {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        // gap: 5rem;
+        height: 5rem;
+        background-color: white;
+    }
+
+    &__content {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+        gap: 20px;
+    }
+
+    &__card {
+        // border: 1px solid whitesmoke;
+        border-radius: 5px;
+        box-shadow: 0 0 10px whitesmoke;
+
+        img {
+            width: 100%;
+        }
+    }
+}
+
+.example-header-image {
+    background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
+    background-size: cover;
+  }
+
+.example-form-field {
+    width: 400px;
+}

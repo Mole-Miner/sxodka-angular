@@ -32,7 +32,6 @@ export class LeafletService {
         new TileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             minZoom: 3,
             detectRetina: true,
-            tileSize: 256,
             attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
         }).addTo(this._map);
     }

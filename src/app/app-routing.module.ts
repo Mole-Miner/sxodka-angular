@@ -18,6 +18,10 @@ export const routes: Routes = [
     loadChildren: () => import('./search/search.module').then((m) => m.SearchModule)
   },
   {
+    path: 'library',
+    loadChildren: () => import('./library/library.module').then((m) => m.LibraryModule)
+  },
+  {
     path: 'map',
     loadChildren: () => import('./map/map.module').then((m) => m.MapModule)
   },
